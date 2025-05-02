@@ -35,14 +35,20 @@ def submit():
     if not name or not roll:
         return "Name or Roll Number is missing. Please provide both."
 
-    if roll in DB: 
-        DISPLAY_TEXT = "Welcome to ACPS LAB"
-        arduino.write(b'open_gate\n')  # Command to Arduino to open the gate
-    else:
-        DISPLAY_TEXT = f"Access denied, please {name} try again"
-        arduino.write(b'close_gate\n')  # Command to Arduino to close the gate
-
-    return DISPLAY_TEXT
+    try:
+        if roll in DB:
+            arduino.write(b'open_gate\n')
+            response = arduino.readline().decode().strip()
+            if response == "DOOR_OPENED":
+                return "Welcome to ACPS LAB"
+            else:
+                return "Error: Door mechanism not responding properly"
+        else:
+            arduino.write(b'close_gate\n')
+            response = arduino.readline().decode().strip()
+            return f"Access denied, please {name} try again"
+    except serial.SerialException as e:
+        return f"Error communicating with door: {str(e)}"
 
 @app.errorhandler(Exception)
 def handle_exception(e):

@@ -34,11 +34,12 @@ This project implements an automated door lock system that uses QR code authenti
 
 ## Configuration
 1. Create a `DB.json` file with authorized users:
-   ```json
    {
-       "roll123": {"name": "John Doe"},
-       "roll456": {"name": "Jane Smith"}
-   }
+    "22bsm014" : "Broteen Das",
+    "22bsm020" : "Gaurav Kokila",
+    "22bsm043" : "poornima singh",
+    "22bsm008" : "anushka kumari"
+}
    ```
 2. Ensure Arduino is connected to the correct port (default: /dev/ttyUSB0)
 
